@@ -5,6 +5,7 @@ etc/puppetdb
 etc/puppetdb/log4j.properties
 etc/puppetdb/conf.d
 etc/puppetdb/conf.d/config.ini
+etc/puppetdb/conf.d/database.ini
 etc/puppetdb/conf.d/jetty.ini
 etc/rc.d/puppetdb
 sbin/puppetdb-ssl-setup 
