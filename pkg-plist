@@ -1,0 +1,19 @@
+/var/puppetdb
+/var/log/puppetdb
+/etc/logrotate.d/puppetdb
+etc/puppetdb
+etc/puppetdb/log4j.properties
+etc/puppetdb/conf.d
+etc/puppetdb/conf.d/config.ini
+etc/puppetdb/conf.d/database.ini
+etc/puppetdb/conf.d/jetty.ini
+etc/rc.d/puppetdb
+sbin/puppetdb-ssl-setup 
+share/puppetdb
+share/puppetdb/puppetdb.jar
+
+@dirrm /var/puppetdb
+@dirrm /var/log/puppetdb
+@dirrm etc/puppetdb/conf.d
+@dirrm etc/puppetdb
+@dirrm share/puppetdb

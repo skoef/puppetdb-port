@@ -50,7 +50,7 @@ load_rc_config "${name}"
 
 : ${puppetdb_enable="NO"}
 : ${puppetdb_home="%%PUPPETDB_HOME%%"}
-: ${puppetdb_args="services -c %%PREFIX%%/etc/puppetdb/conf.d/config.ini"}
+: ${puppetdb_args="services -c %%PREFIX%%/etc/puppetdb/conf.d"}
 : ${puppetdb_java_home="%%JAVA_HOME%%"}
 : ${puppetdb_user="%%PUPPETDB_USER%%"}
 : ${puppetdb_group="%%PUPPETDB_GROUP%%"}
