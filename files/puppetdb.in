@@ -16,10 +16,6 @@
 # puppetdb_args (str):
 #   Extra arguments passed to start command
 #
-# puppetdb_home (str)
-#   Set to "%%PUPPETDB_HOME%%" by default.
-#   Set the PUPPETDB_HOME variable for puppetdb process
-#
 # puppetdb_java_home (str):
 #   Set to "%%JAVA_HOME%%" by default.
 #   Set the Java virtual machine to run puppetdb
@@ -49,7 +45,6 @@ rcvar=puppetdb_enable
 load_rc_config "${name}"
 
 : ${puppetdb_enable="NO"}
-: ${puppetdb_home="%%PUPPETDB_HOME%%"}
 : ${puppetdb_args="services -c %%PREFIX%%/etc/puppetdb/conf.d"}
 : ${puppetdb_java_home="%%JAVA_HOME%%"}
 : ${puppetdb_user="%%PUPPETDB_USER%%"}
@@ -75,13 +70,13 @@ puppetdb_prestart() {
     install -d -o "${puppetdb_user}" -g "${puppetdb_group}" -m 750 "/var/run/puppetdb"
   fi
 
-  chown "root:${puppetdb_group}" "%%PREFIX%%/etc/puppetdb/conf.d"
+  chown -R "root:${puppetdb_group}" "%%PREFIX%%/etc/puppetdb/conf.d"
   chmod 0750 "%%PREFIX%%/etc/puppetdb/conf.d"
 
   chown "root:${puppetdb_group}" "%%PREFIX%%/etc/puppetdb/log4j.properties"
   chmod 0640 "%%PREFIX%%/etc/puppetdb/log4j.properties"
 
-  chown "${puppetdb_user}:${puppetdb_group}" "/var/puppetdb"
+  chown -R "${puppetdb_user}:${puppetdb_group}" "/var/puppetdb"
   chmod 0750 "/var/puppetdb"
 }
 

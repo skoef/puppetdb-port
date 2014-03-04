@@ -1,19 +1,58 @@
-/var/puppetdb
-/var/log/puppetdb
 /etc/logrotate.d/puppetdb
-etc/puppetdb
-etc/puppetdb/log4j.properties
-etc/puppetdb/conf.d
-etc/puppetdb/conf.d/config.ini
-etc/puppetdb/conf.d/database.ini
-etc/puppetdb/conf.d/jetty.ini
-etc/rc.d/puppetdb
-sbin/puppetdb-ssl-setup 
-share/puppetdb
-share/puppetdb/puppetdb.jar
+libexec/puppetdb/puppetdb-anonymize
+libexec/puppetdb/puppetdb-export
+libexec/puppetdb/puppetdb-foreground
+libexec/puppetdb/puppetdb-import
+libexec/puppetdb/puppetdb-ssl-setup
+sbin/puppetdb
+%%DATADIR%%/puppetdb.jar
 
-@dirrm /var/puppetdb
-@dirrm /var/log/puppetdb
-@dirrm etc/puppetdb/conf.d
-@dirrm etc/puppetdb
-@dirrm share/puppetdb
+@group %%PUPPETDB_GROUP%%
+@unexec if cmp -s %D/etc/puppetdb/conf.d/config.ini.sample %D/etc/puppetdb/conf.d/config.ini; then rm -f %D/etc/puppetdb/conf.d/config.ini; fi
+etc/puppetdb/conf.d/config.ini.sample
+@exec if [ ! -f %D/etc/puppetdb/conf.d/config.ini ] ; then cp -p %D/%F %B/config.ini; fi
+@unexec if cmp -s %D/etc/puppetdb/conf.d/database.ini.sample %D/etc/puppetdb/conf.d/database.ini; then rm -f %D/etc/puppetdb/conf.d/database.ini; fi
+etc/puppetdb/conf.d/database.ini.sample
+@exec if [ ! -f %D/etc/puppetdb/conf.d/database.ini ] ; then cp -p %D/%F %B/database.ini; fi
+@unexec if cmp -s %D/etc/puppetdb/conf.d/jetty.ini.sample %D/etc/puppetdb/conf.d/jetty.ini; then rm -f %D/etc/puppetdb/conf.d/jetty.ini; fi
+etc/puppetdb/conf.d/jetty.ini.sample
+@exec if [ ! -f %D/etc/puppetdb/conf.d/jetty.ini ] ; then cp -p %D/%F %B/jetty.ini; fi
+@unexec if cmp -s %D/etc/puppetdb/conf.d/repl.ini.sample %D/etc/puppetdb/conf.d/repl.ini; then rm -f %D/etc/puppetdb/conf.d/repl.ini; fi
+etc/puppetdb/conf.d/repl.ini.sample
+@exec if [ ! -f %D/etc/puppetdb/conf.d/repl.ini ] ; then cp -p %D/%F %B/repl.ini; fi
+etc/puppetdb/log4j.properties
+
+@owner %%PUPPETDB_USER%%
+@exec mkdir -p /var/log/puppetdb
+@dirrmtry /var/log/puppetdb
+
+@mode 0750
+@exec mkdir -p /var/puppetdb
+@mode
+
+@exec mkdir -p /var/puppetdb/state
+@dirrmtry /var/puppetdb/state
+@exec mkdir -p /var/puppetdb/db
+@dirrmtry /var/puppetdb/db
+@exec mkdir -p /var/puppetdb/mq
+@dirrmtry /var/puppetdb/mq
+@dirrmtry /var/puppetdb
+
+@owner
+@group
+
+@unexec rm -f %D/share/puppetdb/state
+@exec ln -s /var/puppetdb/state %D/share/puppetdb/state
+@unexec rm -f %D/share/puppetdb/mq
+@exec ln -s /var/puppetdb/mq %D/share/puppetdb/mq
+@unexec rm -f %D/share/puppetdb/db
+@exec ln -s /var/puppetdb/db %D/share/puppetdb/db
+@unexec rm -f %D/share/puppetdb/log
+@exec ln -s /var/log/puppetdb %D/share/puppetdb/log
+
+@dirrmtry etc/puppetdb/conf.d
+@dirrmtry etc/puppetdb
+@dirrm libexec/puppetdb
+
+@dirrm %%DATADIR%%
+@dirrmtry /etc/logrotate.d
