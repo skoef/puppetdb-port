@@ -1,11 +1,21 @@
 /etc/logrotate.d/puppetdb
+%%ETCDIR%%/logback.xml
 libexec/puppetdb/puppetdb-anonymize
 libexec/puppetdb/puppetdb-export
 libexec/puppetdb/puppetdb-foreground
 libexec/puppetdb/puppetdb-import
 libexec/puppetdb/puppetdb-ssl-setup
+
+sbin/puppetdb-anonymize
+sbin/puppetdb-export
+sbin/puppetdb-foreground
+sbin/puppetdb-import
+sbin/puppetdb-ssl-setup
+
 sbin/puppetdb
 %%DATADIR%%/puppetdb.jar
+%%DATADIR%%/log
+/var/%%PUPPETDB_USER%%db/config
 
 @group %%PUPPETDB_GROUP%%
 @unexec if cmp -s %D/etc/puppetdb/conf.d/config.ini.sample %D/etc/puppetdb/conf.d/config.ini; then rm -f %D/etc/puppetdb/conf.d/config.ini; fi
@@ -20,7 +30,6 @@ etc/puppetdb/conf.d/jetty.ini.sample
 @unexec if cmp -s %D/etc/puppetdb/conf.d/repl.ini.sample %D/etc/puppetdb/conf.d/repl.ini; then rm -f %D/etc/puppetdb/conf.d/repl.ini; fi
 etc/puppetdb/conf.d/repl.ini.sample
 @exec if [ ! -f %D/etc/puppetdb/conf.d/repl.ini ] ; then cp -p %D/%F %B/repl.ini; fi
-etc/puppetdb/log4j.properties
 
 @owner %%PUPPETDB_USER%%
 @exec mkdir -p /var/log/puppetdb
@@ -47,8 +56,7 @@ etc/puppetdb/log4j.properties
 @exec ln -s /var/puppetdb/mq %D/share/puppetdb/mq
 @unexec rm -f %D/share/puppetdb/db
 @exec ln -s /var/puppetdb/db %D/share/puppetdb/db
-@unexec rm -f %D/share/puppetdb/log
-@exec ln -s /var/log/puppetdb %D/share/puppetdb/log
+@unexec rm -f %D/share/puppetdb/log/puppetdb
 
 @dirrmtry etc/puppetdb/conf.d
 @dirrmtry etc/puppetdb

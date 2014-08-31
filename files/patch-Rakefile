@@ -1,11 +1,29 @@
---- ./Rakefile.orig	2014-03-05 11:42:53.000000000 +0000
-+++ ./Rakefile	2014-03-05 13:55:04.000000000 +0000
-@@ -95,6 +95,8 @@
+--- Rakefile.orig	2014-08-17 17:15:01.000000000 -0700
++++ Rakefile	2014-08-17 17:15:40.000000000 -0700
+@@ -80,7 +80,7 @@
+     @java_bin = "/opt/puppet/bin/java"
+ else
+     @install_dir = case @osfamily
+-      when /openbsd/
++      when /openbsd/, /freebsd/
+         "/usr/local/share/puppetdb"
+       else
+         "/usr/share/puppetdb"
+@@ -89,7 +89,7 @@
+     @config_dir = "/etc/puppetdb/conf.d"
+     @lib_dir = "/var/lib/puppetdb"
+     @libexec_dir = case @osfamily
+-      when /openbsd/
++      when /openbsd/, /freebsd/
+         "/usr/local/libexec/puppetdb"
+       when /redhat/, /suse/, /darwin/, /bsd/
+         "/usr/libexec/puppetdb"
+@@ -129,6 +129,8 @@
      @plibdir = @pe ? PE_SITELIBDIR : (%x(ruby -rrbconfig -e "puts RbConfig::CONFIG['sitelibdir']").chomp)
    when /openbsd/
      @plibdir = @pe ? PE_SITELIBDIR : '/usr/local/lib/ruby/site_ruby/1.9.1'
 +  when /freebsd/
 +    @plibdir = @pe ? PE_SITELIBDIR : Facter.value(:rubysitedir).chomp
+   when /archlinux/
+     @plibdir = @pe ? PE_SITELIBDIR : (%x(ruby -rrbconfig -e 'puts RbConfig::CONFIG["vendorlibdir"]').chomp)
  end
- 
- @heap_dump_path = "#{@log_dir}/puppetdb-oom.hprof"
