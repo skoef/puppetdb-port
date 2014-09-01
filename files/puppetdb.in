@@ -78,8 +78,8 @@ puppetdb_prestart() {
   chown "root:${puppetdb_group}" "%%PREFIX%%/etc/puppetdb/logback.xml"
   chmod 0640 "%%PREFIX%%/etc/puppetdb/logback.xml"
 
-  chown -R "${puppetdb_user}:${puppetdb_group}" "/var/puppetdb"
-  chmod 0750 "/var/puppetdb"
+  chown -R "${puppetdb_user}:${puppetdb_group}" "/var/db/puppetdb"
+  chmod 0750 "/var/db/puppetdb"
 }
 
 run_rc_command "$1"
