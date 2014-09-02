@@ -25,11 +25,11 @@
 #   Java VM args to use.
 #
 # puppetdb_user (str):
-#   Set to "%%PUPPETDB_USER%%" by default.
+#   Set to "puppetdb" by default.
 #   User to run puppetdb as.
 #
 # puppetdb_group (str):
-#   Set to "%%PUPPETDB_GROUP%%" by default.
+#   Set to "puppetdb" by default.
 #   Group for data file ownership.
 #
 # puppetdb_log_file (str):
@@ -47,8 +47,8 @@ load_rc_config "${name}"
 : ${puppetdb_enable="NO"}
 : ${puppetdb_args="services -c %%PREFIX%%/etc/puppetdb/conf.d"}
 : ${puppetdb_java_home="%%JAVA_HOME%%"}
-: ${puppetdb_user="%%PUPPETDB_USER%%"}
-: ${puppetdb_group="%%PUPPETDB_GROUP%%"}
+: ${puppetdb_user="puppetdb"}
+: ${puppetdb_group="puppetdb"}
 : ${puppetdb_log_file="%%PUPPETDB_LOG_FILE%%"}
 
 pidfile="/var/run/puppetdb/puppetdb.pid"
@@ -78,8 +78,8 @@ puppetdb_prestart() {
   chown "root:${puppetdb_group}" "%%PREFIX%%/etc/puppetdb/logback.xml"
   chmod 0640 "%%PREFIX%%/etc/puppetdb/logback.xml"
 
-  chown -R "${puppetdb_user}:${puppetdb_group}" "/var/puppetdb"
-  chmod 0750 "/var/puppetdb"
+  chown -R "${puppetdb_user}:${puppetdb_group}" "/var/db/puppetdb"
+  chmod 0750 "/var/db/puppetdb"
 }
 
 run_rc_command "$1"
